@@ -4,12 +4,15 @@ logging.basicConfig(filename="logger.log", level=logging.DEBUG, format="%(asctim
 
 # NEXT: Context manager for other file's functions.
 
-#db_manager.init_db()
+db_manager.init_db()
+cursor = db_manager.get_connection()
 
 today = time.strftime("%Y-%m-%d")
 elapsed_seconds = 0
 checkpoint = 0
 timer_id = None
+
+session_start_time = 0  # To save session time between starts and stops.
 
 def stopwatch():
 	logging.info(f"stopwatch() started.")
@@ -20,7 +23,8 @@ def stopwatch():
 
 
 def start_timer():
-	global elapsed_seconds
+	global elapsed_seconds, session_start_time
+	session_start_time = time.time()
 	elapsed_seconds = time.time() - checkpoint
 	logging.info(f"elapsed_seconds: {elapsed_seconds}, checkpoint: {checkpoint}")
 	gui.start_button.config(state=DISABLED)
@@ -28,13 +32,19 @@ def start_timer():
 	stopwatch()
 
 def stop_timer():
-	global timer_id, checkpoint
+	global timer_id, checkpoint, cursor, session_start_time
 	checkpoint = time.time() - elapsed_seconds # To save elapsed time when stopping the timer.
 	if timer_id:
 		gui.time_label.after_cancel(timer_id)
 		timer_id = None
 	gui.stop_button.config(state=DISABLED)
 	gui.start_button.config(state=ACTIVE)
+	# Add a counter to count to 1:30 | If the counter ends before user interept save session | 
+	if not gui.quick_stop.get();
+		# Save to DB.
+		session_stop_time = time.time()
+		duration_session_time = session_stop_time - session_start_time
+		saver.save(today, session_start_time, session_stop_time, duration_session_time)
 
 
 

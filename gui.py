@@ -18,6 +18,17 @@ time_label = Label(main_frame,
 	font=('Arial', 100))
 time_label.pack()
 
+# Checkbox
+quick_stop = BooleanVar(value=False)
+quick_stop_check = Checkbutton(buttons_frame,
+	variable=quick_stop,
+	onvalue=True,
+	offvalue=False,
+	font=("Arial", 10),
+	text="quick stop (max=1:30)",
+	)
+quick_stop_check.pack(side=RIGHT)
+
 # Start button.
 start_button = Button(buttons_frame,
 	text="Start",
@@ -54,3 +65,5 @@ info_label = Label(info_frame,
 	foreground="black",
 	font=('Arial', 20))
 info_label.pack()
+
+stop_button.config(state=DISABLED)

@@ -1,7 +1,6 @@
 import time, db_manager, format_time
 
-def save(today, start_time, duration):
-	end_time = time.strftime("%H:%M:%S")
+def save(today, start_time, end_time, duration):
 
 	with db_manager.get_connection() as conn:
 		conn.execute(
@@ -10,5 +9,4 @@ def save(today, start_time, duration):
 			VALUES (?,?,?,?)""",
 			(today, start_time, end_time, duration)
 		)
-
 	return f"Session has been saved (duration: {format_time.format_time(duration)})"
