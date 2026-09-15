@@ -13,6 +13,7 @@ checkpoint = 0
 timer_id = None
 
 session_start_time = 0  # To save session time between starts and stops.
+session_name = ""
 
 def stopwatch():
 	logging.info(f"stopwatch() started.")
@@ -23,7 +24,12 @@ def stopwatch():
 
 
 def start_timer():
-	global elapsed_seconds, session_start_time
+	global elapsed_seconds, session_start_time, session_name
+	gui.clear_info_label()
+	session_name = gui.subject_entry.get()
+	if not session_name:
+		gui.info_label.config(text="Please provide a subject name first.", fg='red')
+		return
 	session_start_time = time.time()
 	elapsed_seconds = time.time() - checkpoint
 	logging.info(f"elapsed_seconds: {elapsed_seconds}, checkpoint: {checkpoint}")
@@ -38,13 +44,14 @@ def stop_timer():
 		gui.time_label.after_cancel(timer_id)
 		timer_id = None
 	gui.stop_button.config(state=DISABLED)
-	gui.start_button.config(state=ACTIVE)
-	# Add a counter to count to 1:30 | If the counter ends before user interept save session | 
-	if not gui.quick_stop.get();
-		# Save to DB.
-		session_stop_time = time.time()
-		duration_session_time = session_stop_time - session_start_time
+	gui.start_button.config(state=ACTIVE) 
+	# Save to DB.
+	session_stop_time = time.time()
+	duration_session_time = session_stop_time - session_start_time
+	if duration_session_time > 60: # Only more than 1min long sessions will be saved.
 		saver.save(today, session_start_time, session_stop_time, duration_session_time)
+	else:
+		gui.info_label.config(text="This session is not going to be saved\nbecause it is less than one minute long.", fg='red')
 
 
 
