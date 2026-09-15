@@ -49,7 +49,7 @@ def stop_timer():
 	session_stop_time = time.time()
 	duration_session_time = session_stop_time - session_start_time
 	if duration_session_time > 60: # Only more than 1min long sessions will be saved.
-		saver.save(today, session_start_time, session_stop_time, duration_session_time)
+		saver.save(today, session_start_time, session_stop_time, session_name, duration_session_time)
 	else:
 		gui.info_label.config(text="This session is not going to be saved\nbecause it is less than one minute long.", fg='red')
 

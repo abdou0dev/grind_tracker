@@ -9,6 +9,7 @@ def init_db():
 	cursor.execute("""CREATE TABLE IF NOT EXISTS sessions(
 		id INTEGER PRIMARY KEY,
 		date TEXT NOT NULL,
+		subject TEXT,
 		start_time REAL,
 		end_time REAL,
 		duration REAL) STRICT
