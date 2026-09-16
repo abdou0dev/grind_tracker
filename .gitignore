@@ -1,0 +1,4 @@
+*.log
+*.db
+features.txt
+__pycache__/

@@ -1,9 +1,50 @@
 from tkinter import *
+import db_utils
 
-# GUI
+def clear_info_label():
+	info_label.config(text="", fg='black')
+
+def view_history():
+	history_window = Toplevel()
+	history_window.title("History")
+
+	search_entry = Entry(history_window,
+		font=("Arial", 10),
+		width=50,
+		)
+	search_entry.pack(side="left", ipadx=5, ipady=1, padx=5)
+
+	search_button = Button(history_window,
+		text="Search",
+		font=('Arial', 10, 'bold'),
+		)
+	search_button.pack(side='right')
+
+
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
 
+# Menubar
+menubar = Menu(window)
+window.config(menu=menubar)
+# History Menu
+history_menu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="History", menu=history_menu)
+history_menu.add_command(label="View History", command=view_history)
+history_menu.add_command(label="Summary")
+history_menu.add_separator()
+history_menu.add_command(label="Delete History")
+
+# Action Menu
+action_menu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Action", menu=action_menu)
+action_menu.add_command(label="Reset Timer")
+action_menu.add_command(label="Set Custom Time")
+action_menu.add_separator()
+action_menu.add_command(label="Exit", command=quit)
+
+
+# Frames
 top_frame = Frame(window,)
 top_frame.pack()
 main_frame = Frame(window,)
@@ -65,6 +106,3 @@ info_label = Label(info_frame,
 info_label.pack()
 
 stop_button.config(state=DISABLED)
-
-def clear_info_label():
-	info_label.config(text="", fg='black')

@@ -2,7 +2,7 @@ import sqlite3
 
 def init_db():
 	# Connecting to db
-	conn = sqlite3.connect("stopwatch.db")
+	conn = sqlite3.connect("history.db")
 	cursor = conn.cursor()
 
 	# Defining session table
@@ -18,4 +18,4 @@ def init_db():
 	conn.close()
 
 def get_connection():
-	return sqlite3.connect("stopwatch.db")
+	return sqlite3.connect("history.db")
