@@ -1,5 +1,6 @@
 from tkinter import *
-import db_utils
+from tkinter import ttk
+import db_utils, format_time
 
 def clear_info_label():
 	info_label.config(text="", fg='black')
@@ -8,17 +9,44 @@ def view_history():
 	history_window = Toplevel()
 	history_window.title("History")
 
-	search_entry = Entry(history_window,
+	# Search Bar Frame
+	search_bar_frame = Frame(history_window,
+		pady=5)
+	search_bar_frame.pack()
+	# Treeview Frame
+	tree_frame = Frame(history_window,
+		pady=5)
+	tree_frame.pack()
+
+	# Search Entry
+	search_entry = Entry(search_bar_frame,
 		font=("Arial", 10),
 		width=50,
 		)
 	search_entry.pack(side="left", ipadx=5, ipady=1, padx=5)
 
-	search_button = Button(history_window,
+	# Search Button
+	search_button = Button(search_bar_frame,
 		text="Search",
 		font=('Arial', 10, 'bold'),
 		)
 	search_button.pack(side='right')
+
+	tree = ttk.Treeview(tree_frame,
+		columns=("date", "subject", "duration", "start_time", "end_time"),
+		show="headings")
+	tree.heading("date", text="Date")
+	tree.heading("subject", text="Subject")
+	tree.heading("duration", text="Duration")
+	tree.heading("start_time", text="Start Time")
+	tree.heading("end_time", text="End Time")
+	tree.pack()
+
+	data = db_utils.first_pull()
+	print(data)
+	for session in data:
+		tree.insert("", 'end', values=(session[0], session[1], format_time.simple_time(session[2]), format_time.simple_time(session[3]), format_time.simple_time(session[4])))
+
 
 
 window = Tk() # Instantiate an instance of a window.
