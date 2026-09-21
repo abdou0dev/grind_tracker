@@ -5,6 +5,9 @@ import db_utils, format_time
 def clear_info_label():
 	info_label.config(text="", fg='black')
 
+def search(search_type, keyword):
+	pass
+
 def view_history():
 	history_window = Toplevel()
 	history_window.title("History")
@@ -40,6 +43,7 @@ def view_history():
 	search_button = Button(search_bar_frame,
 		text="Search",
 		font=('Arial', 10, 'bold'),
+		command=lambda: search(search_option.get(), search_entry.get()),
 		)
 	search_button.pack(side='right')
 
