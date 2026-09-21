@@ -27,16 +27,14 @@ def view_history():
 
 	# Search Radiobuttons
 	search_option = IntVar()
-	date_rbutton = Radiobutton(search_bar_frame,
+	Radiobutton(search_bar_frame,
 		text='Date',
 		variable=search_option,
-		value=0,)
-	subject_rbutton = Radiobutton(search_bar_frame,
+		value=0,).pack(side='left')
+	Radiobutton(search_bar_frame,
 		text='Subject',
 		variable=search_option,
-		value=1)
-	date_rbutton.pack(side='left')
-	subject_rbutton.pack(side='left')
+		value=1).pack(side='left')
 
 	# Search Button
 	search_button = Button(search_bar_frame,
