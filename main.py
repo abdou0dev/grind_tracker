@@ -2,8 +2,6 @@ from tkinter import *
 import gui, time, db_manager, saver, format_time, logging
 logging.basicConfig(filename="logger.log", level=logging.DEBUG, format="%(asctime)s, %(message)s")
 
-# NEXT: Context manager for other file's functions.
-
 db_manager.init_db()
 cursor = db_manager.get_connection()
 

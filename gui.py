@@ -25,6 +25,19 @@ def view_history():
 		)
 	search_entry.pack(side="left", ipadx=5, ipady=1, padx=5)
 
+	# Search Radiobuttons
+	search_option = IntVar()
+	date_rbutton = Radiobutton(search_bar_frame,
+		text='Date',
+		variable=search_option,
+		value=0,)
+	subject_rbutton = Radiobutton(search_bar_frame,
+		text='Subject',
+		variable=search_option,
+		value=1)
+	date_rbutton.pack(side='left')
+	subject_rbutton.pack(side='left')
+
 	# Search Button
 	search_button = Button(search_bar_frame,
 		text="Search",
@@ -43,7 +56,6 @@ def view_history():
 	tree.pack()
 
 	data = db_utils.first_pull()
-	print(data)
 	for session in data:
 		tree.insert("", 'end', values=(session[0], session[1], format_time.simple_time(session[2]), format_time.simple_time(session[3]), format_time.simple_time(session[4])))
 
