@@ -1,13 +1,37 @@
 from tkinter import *
 from tkinter import ttk
 import db_utils, format_time
+import logging
 
 def clear_info_label():
 	info_label.config(text="", fg='black')
 
-def search(search_type, keyword):
-	pass
+def insert_treeview(data, tree):
+	tree.delete(*tree.get_children())
 
+	for session in data:
+		duration = format_time.format_time(session[2])
+		start = format_time.simple_time(session[3])
+		end = format_time.simple_time(session[4])
+
+		logging.info(f"RAW duration: {session[2]}")
+		logging.info(f"FORMATTED duration: {duration}")
+		logging.info(f"RAW start: {session[3]}")
+		logging.info(f"FORMATTED start: {start}")
+		logging.info(f"RAW end: {session[4]}")
+		logging.info(f"FORMATTED end: {end}")
+
+		tree.insert("", 'end', values=(session[0], session[1], format_time.format_time(session[2]), format_time.simple_time(session[3]), format_time.simple_time(session[4])))
+	
+
+def search(search_type, keyword, tree):
+	if search_type == 0:	# By date
+		result = db_utils.search_by_date(keyword)
+		logging.info(result)
+	elif search_type == 1:	# By subject
+		result = db_utils.search_by_subject(keyword)
+	logging.info(f"original tree: {tree}")
+	insert_treeview(result, tree)
 def view_history():
 	history_window = Toplevel()
 	history_window.title("History")
@@ -39,14 +63,7 @@ def view_history():
 		variable=search_option,
 		value=1).pack(side='left')
 
-	# Search Button
-	search_button = Button(search_bar_frame,
-		text="Search",
-		font=('Arial', 10, 'bold'),
-		command=lambda: search(search_option.get(), search_entry.get()),
-		)
-	search_button.pack(side='right')
-
+	# TreeView
 	tree = ttk.Treeview(tree_frame,
 		columns=("date", "subject", "duration", "start_time", "end_time"),
 		show="headings")
@@ -55,11 +72,17 @@ def view_history():
 	tree.heading("duration", text="Duration")
 	tree.heading("start_time", text="Start Time")
 	tree.heading("end_time", text="End Time")
+
+	# Search Button
+	search_button = Button(search_bar_frame,
+		text="Search",
+		font=('Arial', 10, 'bold'),
+		command=lambda: search(search_option.get(), search_entry.get(), tree),
+		)
+	search_button.pack(side='right')
 	tree.pack()
 
-	data = db_utils.first_pull()
-	for session in data:
-		tree.insert("", 'end', values=(session[0], session[1], format_time.simple_time(session[2]), format_time.simple_time(session[3]), format_time.simple_time(session[4])))
+	insert_treeview(db_utils.first_pull(), tree)
 
 
 
