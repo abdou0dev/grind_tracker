@@ -9,4 +9,4 @@ def save(today, start_time, end_time, subject, duration):
 			VALUES (?,?,?,?,?)""",
 			(today, start_time, end_time, subject, duration)
 		)
-	return f"Session has been saved (duration: {format_time.format_time(duration)})"
+	return f"Session has been saved (duration: {format_time.format_duration(duration)})"

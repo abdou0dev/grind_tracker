@@ -7,21 +7,9 @@ def clear_info_label():
 	info_label.config(text="", fg='black')
 
 def insert_treeview(data, tree):
-	tree.delete(*tree.get_children())
-
+	tree.delete(*tree.get_children()) # Clearing Treeview
 	for session in data:
-		duration = format_time.format_time(session[2])
-		start = format_time.simple_time(session[3])
-		end = format_time.simple_time(session[4])
-
-		logging.info(f"RAW duration: {session[2]}")
-		logging.info(f"FORMATTED duration: {duration}")
-		logging.info(f"RAW start: {session[3]}")
-		logging.info(f"FORMATTED start: {start}")
-		logging.info(f"RAW end: {session[4]}")
-		logging.info(f"FORMATTED end: {end}")
-
-		tree.insert("", 'end', values=(session[0], session[1], format_time.format_time(session[2]), format_time.simple_time(session[3]), format_time.simple_time(session[4])))
+		tree.insert("", 'end', values=(session[0], session[1], format_time.format_duration(session[2]), format_time.format_time(session[3]), format_time.format_time(session[4])))
 	
 
 def search(search_type, keyword, tree):
@@ -79,7 +67,14 @@ def view_history():
 		font=('Arial', 10, 'bold'),
 		command=lambda: search(search_option.get(), search_entry.get(), tree),
 		)
-	search_button.pack(side='right')
+
+	# Reset Button
+	reset_button = Button(search_bar_frame,
+		text="Reset",
+		font=('Arial', 10, 'bold'),
+		command=lambda: insert_treeview(db_utils.first_pull(), tree))
+	reset_button.pack(side='right', padx=5)
+	search_button.pack(side='right', padx=5)
 	tree.pack()
 
 	insert_treeview(db_utils.first_pull(), tree)

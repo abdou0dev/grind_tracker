@@ -16,7 +16,7 @@ session_name = ""
 def stopwatch():
 	logging.info(f"stopwatch() started.")
 	global elapsed_seconds, checkpoint, timer_id
-	gui.time_label.config(text=format_time.format_time(time.time() - elapsed_seconds))
+	gui.time_label.config(text=format_time.format_duration(time.time() - elapsed_seconds))
 	logging.info(f"elapsed_seconds: {elapsed_seconds}")
 	timer_id = gui.time_label.after(1000, stopwatch)
 
