@@ -79,7 +79,32 @@ def view_history():
 
 	insert_treeview(db_utils.first_pull(), tree)
 
+def summary():
+	summary_win = Toplevel()
+	summary_win.title("Summary")
 
+	Label(summary_win,
+		text="Summary",
+		font=("Arial", 35, 'bold')
+		).pack()
+	# Frames.
+	time_spent_frame = Frame(summary_win)
+	time_spent_frame.pack(side='left', anchor='w', ipadx=10)
+	sessions_frame = Frame(summary_win,)
+	by_subject_frame = Frame(summary_win,)
+	most_active_days_frame = Frame(summary_win,)
+
+	# Time Spent
+	Label(time_spent_frame,
+		text="Time Spent",
+		font=("Arial", "20", 'bold'),
+		padx=10).pack(anchor='w')
+	today_label = Label(time_spent_frame,
+		text=f"Today 					{db_utils.time_spent_today()}",
+		font=("Arial", 15),
+		padx=10)
+	today_label.pack(anchor='w')
+	############
 
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
@@ -91,7 +116,7 @@ window.config(menu=menubar)
 history_menu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="History", menu=history_menu)
 history_menu.add_command(label="View History", command=view_history)
-history_menu.add_command(label="Summary")
+history_menu.add_command(label="Summary", command=summary)
 history_menu.add_separator()
 history_menu.add_command(label="Delete History")
 

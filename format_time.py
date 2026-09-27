@@ -1,4 +1,8 @@
 import time, logging
+
+def today():
+	return time.strftime("%Y-%m-%d")
+
 def format_duration(epoch_time):
 	logging.info(f"epoch_time: {epoch_time}")
 	seconds = int(epoch_time % 60)

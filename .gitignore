@@ -1,4 +1,4 @@
 *.log
 *.db
-features.txt
+.txt
 __pycache__/

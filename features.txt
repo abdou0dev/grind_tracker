@@ -1,0 +1,16 @@
+Delete History
+
+View History:
+	Search:
+		Date
+		subject
+
+	Summary:
+		Most active days
+		Less active days
+		Average
+
+	Total:
+		Daily
+		Weekly
+		Monthly
