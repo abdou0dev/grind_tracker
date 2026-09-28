@@ -19,3 +19,6 @@ def format_time(epoch_time):
 		return time.strftime("%H:%M:%S", time_structure)
 	except ValueError, OSError, OverflowError:
 		return "Invalid"
+
+def this_week():
+	pass

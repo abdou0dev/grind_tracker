@@ -89,7 +89,7 @@ def summary():
 		).pack()
 	# Frames.
 	time_spent_frame = Frame(summary_win)
-	time_spent_frame.pack(side='left', anchor='w', ipadx=10)
+	time_spent_frame.pack(side='left', anchor='w')
 	sessions_frame = Frame(summary_win,)
 	by_subject_frame = Frame(summary_win,)
 	most_active_days_frame = Frame(summary_win,)
@@ -98,12 +98,13 @@ def summary():
 	Label(time_spent_frame,
 		text="Time Spent",
 		font=("Arial", "20", 'bold'),
-		padx=10).pack(anchor='w')
-	today_label = Label(time_spent_frame,
-		text=f"Today 					{db_utils.time_spent_today()}",
-		font=("Arial", 15),
-		padx=10)
-	today_label.pack(anchor='w')
+		pady=10).grid(row=0, column=0)
+	Label(time_spent_frame,
+		text=f"Today",
+		font=("Arial", 15)).grid(row=1, column=0, sticky=W)
+	Label(time_spent_frame,
+		text=f"{db_utils.time_spent_today()}",
+		font=("Arial", 15)).grid(row=1, column=1, sticky=E)
 	############
 
 window = Tk() # Instantiate an instance of a window.

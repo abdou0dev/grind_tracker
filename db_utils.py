@@ -21,3 +21,6 @@ def time_spent_today():
 	for duration, in sessions:
 		total+= duration
 	return format_time.format_duration(total)
+
+def time_spent_week():
+	sessions = cursor.execute("SELECT duration FROM sessions WHERE date=?", (today,))
