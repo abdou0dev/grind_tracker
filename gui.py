@@ -124,6 +124,14 @@ def summary():
 		text=f"{db_utils.time_spent_month()}",
 		font=("Arial", 15)).grid(row=3, column=1, sticky=E)
 
+	# All time
+	Label(time_spent_frame,
+		text=f"All time",
+		font=("Arial", 15)).grid(row=4, column=0, sticky=W)
+	Label(time_spent_frame,
+		text=f"{db_utils.all_time()}",
+		font=("Arial", 15)).grid(row=4, column=1, sticky=E)
+
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
 

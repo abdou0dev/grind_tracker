@@ -27,3 +27,7 @@ def time_spent_week():
 def time_spent_month():
 	duration_total = cursor.execute("SELECT SUM(duration) FROM sessions WHERE date BETWEEN ? AND ?", format_time.this_month()).fetchone()
 	return format_time.format_duration(duration_total[0])
+
+def all_time():
+	duration_total = cursor.execute("SELECT SUM(duration) FROM sessions").fetchone()
+	return format_time.format_duration(duration_total[0])
