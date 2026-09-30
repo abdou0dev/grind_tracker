@@ -99,13 +99,30 @@ def summary():
 		text="Time Spent",
 		font=("Arial", "20", 'bold'),
 		pady=10).grid(row=0, column=0)
+
+	# Today
 	Label(time_spent_frame,
 		text=f"Today",
 		font=("Arial", 15)).grid(row=1, column=0, sticky=W)
 	Label(time_spent_frame,
 		text=f"{db_utils.time_spent_today()}",
 		font=("Arial", 15)).grid(row=1, column=1, sticky=E)
-	############
+	
+	# This week
+	Label(time_spent_frame,
+		text=f"This week",
+		font=("Arial", 15)).grid(row=2, column=0, sticky=W)
+	Label(time_spent_frame,
+		text=f"{db_utils.time_spent_week()}",
+		font=("Arial", 15)).grid(row=2, column=1, sticky=E)
+
+	# This month
+	Label(time_spent_frame,
+		text=f"This month",
+		font=("Arial", 15)).grid(row=3, column=0, sticky=W)
+	Label(time_spent_frame,
+		text=f"{db_utils.time_spent_month()}",
+		font=("Arial", 15)).grid(row=3, column=1, sticky=E)
 
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
