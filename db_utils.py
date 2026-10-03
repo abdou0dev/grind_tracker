@@ -31,3 +31,18 @@ def time_spent_month():
 def all_time():
 	duration_total = cursor.execute("SELECT SUM(duration) FROM sessions").fetchone()
 	return format_time.format_duration(duration_total[0])
+
+def total_sessions():
+	total_sessions = cursor.execute("SELECT id FROM sessions").fetchall()
+	return len(total_sessions)
+
+def average_sessions_length():
+	average_length = cursor.execute("SELECT AVG(duration) FROM sessions").fetchone()
+	return format_time.format_duration(average_length[0])
+
+def longest_session():
+	longest_duration = cursor.execute("SELECT MAX(duration) FROM sessions").fetchone()
+	return format_time.format_duration(longest_duration[0])
+
+def by_subject():
+	pass

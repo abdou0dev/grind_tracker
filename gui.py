@@ -89,12 +89,14 @@ def summary():
 		).pack()
 	# Frames.
 	time_spent_frame = Frame(summary_win)
-	time_spent_frame.pack(side='left', anchor='w')
+	time_spent_frame.pack()
 	sessions_frame = Frame(summary_win,)
+	sessions_frame.pack(anchor='w')
 	by_subject_frame = Frame(summary_win,)
 	most_active_days_frame = Frame(summary_win,)
 
-	# Time Spent
+	# TIME SPENT
+
 	Label(time_spent_frame,
 		text="Time Spent",
 		font=("Arial", "20", 'bold'),
@@ -131,6 +133,35 @@ def summary():
 	Label(time_spent_frame,
 		text=f"{db_utils.all_time()}",
 		font=("Arial", 15)).grid(row=4, column=1, sticky=E)
+
+
+	# SESSIONS
+	Label(sessions_frame,
+		text="Sessions",
+		font=("Arial", "20", 'bold'),
+		pady=10).grid(row=0, column=0)
+	# Total
+	Label(sessions_frame,
+		text=f"Total",
+		font=("Arial", 15)).grid(row=1, column=0, sticky=W)
+	Label(sessions_frame,
+		text=f"{db_utils.total_sessions()}",
+		font=("Arial", 15)).grid(row=1, column=1, sticky=E)
+	# Average
+	Label(sessions_frame,
+		text=f"Average",
+		font=("Arial", 15)).grid(row=2, column=0, sticky=W)
+	Label(sessions_frame,
+		text=f"{db_utils.average_sessions_length()}",
+		font=("Arial", 15)).grid(row=2, column=1, sticky=E)
+	# Longest
+	Label(sessions_frame,
+		text=f"Longest",
+		font=("Arial", 15)).grid(row=3, column=0, sticky=W)
+	Label(sessions_frame,
+		text=f"{db_utils.longest_session()}",
+		font=("Arial", 15)).grid(row=3, column=1, sticky=E)
+
 
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
