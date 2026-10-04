@@ -91,9 +91,11 @@ def summary():
 	time_spent_frame = Frame(summary_win)
 	time_spent_frame.pack()
 	sessions_frame = Frame(summary_win,)
-	sessions_frame.pack(anchor='w')
+	sessions_frame.pack()
 	by_subject_frame = Frame(summary_win,)
+	by_subject_frame.pack()
 	most_active_days_frame = Frame(summary_win,)
+	most_active_days_frame.pack()
 
 	# TIME SPENT
 
@@ -136,6 +138,7 @@ def summary():
 
 
 	# SESSIONS
+
 	Label(sessions_frame,
 		text="Sessions",
 		font=("Arial", "20", 'bold'),
@@ -162,6 +165,38 @@ def summary():
 		text=f"{db_utils.longest_session()}",
 		font=("Arial", 15)).grid(row=3, column=1, sticky=E)
 
+	# By Subject
+	Label(by_subject_frame,
+		text="By Subject",
+		font=("Arial", "20", 'bold'),
+		pady=10).grid(row=0, column=0)
+
+	row = 1
+	for subject, duration in db_utils.subject_summary():
+		Label(by_subject_frame,
+		text=subject,
+		font=("Arial", 15)).grid(row=row, column=0, sticky=W)
+		Label(by_subject_frame,
+		text=format_time.format_duration(duration),
+		font=("Arial", 15)).grid(row=row, column=1, sticky=E)
+		row+=1
+
+	# Most Active Days
+
+	Label(most_active_days_frame,
+		text="Most Active Days",
+		font=("Arial", "20", 'bold'),
+		pady=10).grid(row=0, column=0)
+	
+	row = 1
+	for day, duration in db_utils.most_active_days():
+		Label(most_active_days_frame,
+		text=day,
+		font=("Arial", 15)).grid(row=row, column=0, sticky=W)
+		Label(most_active_days_frame,
+		text=format_time.format_duration(duration),
+		font=("Arial", 15)).grid(row=row, column=1, sticky=E)
+		row+=1
 
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")

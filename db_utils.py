@@ -44,5 +44,17 @@ def longest_session():
 	longest_duration = cursor.execute("SELECT MAX(duration) FROM sessions").fetchone()
 	return format_time.format_duration(longest_duration[0])
 
-def by_subject():
-	pass
+def subject_summary():	
+	result = cursor.execute("""SELECT subject, SUM(duration)
+		FROM sessions
+		GROUP BY subject
+		ORDER BY SUM(duration) DESC""")
+	return result
+
+def most_active_days():
+	result = cursor.execute("""SELECT date, SUM(duration)
+		FROM sessions
+		GROUP BY date
+		ORDER BY SUM(duration) DESC
+		LIMIT 3""")
+	return result
