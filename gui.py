@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import db_utils, format_time
 import logging
 
@@ -88,14 +89,14 @@ def summary():
 		font=("Arial", 35, 'bold')
 		).pack()
 	# Frames.
-	time_spent_frame = Frame(summary_win)
-	time_spent_frame.pack()
+	time_spent_frame = Frame(summary_win,)
+	time_spent_frame.pack(fill='x', anchor='w')
 	sessions_frame = Frame(summary_win,)
-	sessions_frame.pack()
+	sessions_frame.pack(fill='x', anchor='w')
 	by_subject_frame = Frame(summary_win,)
-	by_subject_frame.pack()
+	by_subject_frame.pack(fill='x', anchor='w')
 	most_active_days_frame = Frame(summary_win,)
-	most_active_days_frame.pack()
+	most_active_days_frame.pack(fill='x', anchor='w')
 
 	# TIME SPENT
 
@@ -136,6 +137,8 @@ def summary():
 		text=f"{db_utils.all_time()}",
 		font=("Arial", 15)).grid(row=4, column=1, sticky=E)
 
+	time_spent_frame.columnconfigure(1, weight=1)
+
 
 	# SESSIONS
 
@@ -165,6 +168,8 @@ def summary():
 		text=f"{db_utils.longest_session()}",
 		font=("Arial", 15)).grid(row=3, column=1, sticky=E)
 
+	sessions_frame.columnconfigure(1, weight=1)
+
 	# By Subject
 	Label(by_subject_frame,
 		text="By Subject",
@@ -180,6 +185,8 @@ def summary():
 		text=format_time.format_duration(duration),
 		font=("Arial", 15)).grid(row=row, column=1, sticky=E)
 		row+=1
+
+	by_subject_frame.columnconfigure(1, weight=1)
 
 	# Most Active Days
 
@@ -198,6 +205,16 @@ def summary():
 		font=("Arial", 15)).grid(row=row, column=1, sticky=E)
 		row+=1
 
+	most_active_days_frame.columnconfigure(1, weight=1)
+
+
+def delete_history():
+	confirmation = messagebox.askyesno(title="Delete History", message="Are you sure to delete your history?")
+	if confirmation:
+		backup = messagebox.askyesno(title='Backup', message="Do you want to save you history into a file and reset the program from zero?\n\nNO=Complete wipe of history.")
+		db_utils.delete_history(backup)
+		info_label.config(text="History has been deleted and a backup file has been saved.")
+
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
 
@@ -210,7 +227,7 @@ menubar.add_cascade(label="History", menu=history_menu)
 history_menu.add_command(label="View History", command=view_history)
 history_menu.add_command(label="Summary", command=summary)
 history_menu.add_separator()
-history_menu.add_command(label="Delete History")
+history_menu.add_command(label="Delete History", command=delete_history)
 
 # Action Menu
 action_menu = Menu(menubar, tearoff=0)

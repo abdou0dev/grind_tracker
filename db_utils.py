@@ -58,3 +58,15 @@ def most_active_days():
 		ORDER BY SUM(duration) DESC
 		LIMIT 3""")
 	return result
+
+def delete_history(backup):
+	if backup:
+		with db_manager.save_backup() as backup_cursor:
+			cursor.backup(backup_cursor)
+		cursor.execute("DROP TABLE sessions")
+		cursor.commit()
+		cursor.close()
+	else:
+		cursor.execute("DROP TABLE sessions")
+		cursor.commit()
+		cursor.close()
