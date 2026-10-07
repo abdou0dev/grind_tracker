@@ -51,8 +51,20 @@ def stop_timer():
 	else:
 		gui.info_label.config(text="This session is not going to be saved\nbecause it is less than one minute long.", fg='red')
 
+def reset_timer():
+	global elapsed_seconds, checkpoint, timer_id, session_start_time, session_name
+	stop_timer()
+	elapsed_seconds = 0
+	checkpoint = 0
+	timer_id = None
+	session_start_time = 0
+	session_name = ""
+	gui.time_label.config(text=format_time.format_duration(elapsed_seconds))
+	gui.stop_button.config(state=DISABLED)
+	gui.start_button.config(state=ACTIVE)
 
 
+gui.create_menubar(reset_timer)
 gui.start_button.config(command=start_timer)
 gui.stop_button.config(command=stop_timer)
 gui.window.mainloop()

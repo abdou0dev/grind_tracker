@@ -207,7 +207,6 @@ def summary():
 
 	most_active_days_frame.columnconfigure(1, weight=1)
 
-
 def delete_history():
 	confirmation = messagebox.askyesno(title="Delete History", message="Are you sure to delete your history?")
 	if confirmation:
@@ -215,27 +214,29 @@ def delete_history():
 		db_utils.delete_history(backup)
 		info_label.config(text="History has been deleted and a backup file has been saved.")
 
+def create_menubar(reset_timer):
+	# Menubar
+	menubar = Menu(window)
+	window.config(menu=menubar)
+	# History Menu
+	history_menu = Menu(menubar, tearoff=0)
+	menubar.add_cascade(label="History", menu=history_menu)
+	history_menu.add_command(label="View History", command=view_history)
+	history_menu.add_command(label="Summary", command=summary)
+	history_menu.add_separator()
+	history_menu.add_command(label="Delete History", command=delete_history)
+
+	# Action Menu
+	action_menu = Menu(menubar, tearoff=0)
+	menubar.add_cascade(label="Action", menu=action_menu)
+	action_menu.add_command(label="Reset Timer", command=reset_timer)
+	action_menu.add_command(label="Set Custom Time")
+	action_menu.add_separator()
+	action_menu.add_command(label="Exit", command=quit)
+
+
 window = Tk() # Instantiate an instance of a window.
 window.title("Timer")
-
-# Menubar
-menubar = Menu(window)
-window.config(menu=menubar)
-# History Menu
-history_menu = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="History", menu=history_menu)
-history_menu.add_command(label="View History", command=view_history)
-history_menu.add_command(label="Summary", command=summary)
-history_menu.add_separator()
-history_menu.add_command(label="Delete History", command=delete_history)
-
-# Action Menu
-action_menu = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Action", menu=action_menu)
-action_menu.add_command(label="Reset Timer")
-action_menu.add_command(label="Set Custom Time")
-action_menu.add_separator()
-action_menu.add_command(label="Exit", command=quit)
 
 
 # Frames
