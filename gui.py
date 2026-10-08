@@ -214,7 +214,34 @@ def delete_history():
 		db_utils.delete_history(backup)
 		info_label.config(text="History has been deleted and a backup file has been saved.")
 
-def create_menubar(reset_timer):
+def custom_time_window():
+	custom_win = Toplevel()
+	custom_win.title("Set Custom Time")
+	scale = Scale(custom_win,
+		from_=1,
+		to=60,
+		orient=HORIZONTAL,
+		length=400,
+		font=("Arial", 15, 'bold'))
+	scale.pack()
+
+	Label(custom_win, text="Value is in Minutes.",
+		font=("Arial", 15, 'bold'),
+		).pack()
+	result = {"minutes": 0}
+	def submit():
+		result["minutes"] = scale.get()
+		custom_win.destroy()
+
+	Button(custom_win,
+		text="Submit",
+		font=("Arial", 15, 'bold'),
+		command=submit).pack()
+	custom_win.grab_set()
+	custom_win.wait_window()
+	return result
+
+def create_menubar(reset_timer, set_custom_time):
 	# Menubar
 	menubar = Menu(window)
 	window.config(menu=menubar)
@@ -230,7 +257,7 @@ def create_menubar(reset_timer):
 	action_menu = Menu(menubar, tearoff=0)
 	menubar.add_cascade(label="Action", menu=action_menu)
 	action_menu.add_command(label="Reset Timer", command=reset_timer)
-	action_menu.add_command(label="Set Custom Time")
+	action_menu.add_command(label="Set Custom Time", command=set_custom_time)
 	action_menu.add_separator()
 	action_menu.add_command(label="Exit", command=quit)
 
