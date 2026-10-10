@@ -9,7 +9,6 @@ def format_duration(epoch_time):
 	if epoch_time is None:
 		return "00:00:00"
 	else:
-		logging.info(f"epoch_time: {epoch_time}")
 		seconds = int(epoch_time % 60)
 		minutes = int(epoch_time / 60) % 60
 		hours = int(epoch_time / 3600)

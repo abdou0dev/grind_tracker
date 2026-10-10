@@ -239,7 +239,7 @@ def custom_time_window():
 		command=submit).pack()
 	custom_win.grab_set()
 	custom_win.wait_window()
-	return result
+	return result["minutes"]
 
 def create_menubar(reset_timer, set_custom_time):
 	# Menubar
